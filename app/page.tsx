@@ -8,6 +8,8 @@ export default function Home() {
   const heroRef = useRef<HTMLElement>(null);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [activeProject, setActiveProject] = useState<number | null>(null);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const { scrollYProgress } = useScroll();
   const scale = useTransform(scrollYProgress, [0, 1], [1, 0.95]);
   const opacity = useTransform(scrollYProgress, [0, 0.3], [1, 0.8]);
@@ -23,7 +25,7 @@ export default function Home() {
         gestureOrientation: "vertical",
         smoothWheel: true,
         wheelMultiplier: 1,
-        touchMultiplier: 2,
+        touchMultiplier: isMobile ? 1.5 : 2,
         infinite: false,
       });
 
@@ -36,7 +38,7 @@ export default function Home() {
     };
 
     initLenis();
-  }, []);
+  }, [isMobile]);
 
   /* ===== Advanced Particle System ===== */
   useEffect(() => {
@@ -68,8 +70,32 @@ export default function Home() {
     return () => clearInterval(interval);
   }, []);
 
+  /* ===== Detect Mobile Device ===== */
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.innerWidth < 968 || 'ontouchstart' in window);
+    };
+    checkMobile();
+    window.addEventListener("resize", checkMobile);
+    return () => window.removeEventListener("resize", checkMobile);
+  }, []);
+
+  /* ===== Prevent body scroll when mobile menu is open ===== */
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
   /* ===== Mouse Position Tracking ===== */
   useEffect(() => {
+    if (isMobile) return;
+    
     const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({
         x: (e.clientX / window.innerWidth - 0.5) * 2,
@@ -79,10 +105,19 @@ export default function Home() {
 
     window.addEventListener("mousemove", handleMouseMove);
     return () => window.removeEventListener("mousemove", handleMouseMove);
-  }, []);
+  }, [isMobile]);
 
-  /* ===== Enhanced Cursor ===== */
+  /* ===== Enhanced Cursor (Desktop Only) ===== */
   useEffect(() => {
+    if (isMobile) {
+      // Hide cursor elements on mobile
+      const cursor = document.querySelector(".cursor-tail") as HTMLElement;
+      const cursorFollower = document.querySelector(".cursor-follower") as HTMLElement;
+      if (cursor) cursor.style.display = "none";
+      if (cursorFollower) cursorFollower.style.display = "none";
+      return;
+    }
+
     const cursor = document.querySelector(".cursor-tail") as HTMLElement;
     const cursorFollower = document.querySelector(".cursor-follower") as HTMLElement;
     let cursorX = 0;
@@ -118,7 +153,7 @@ export default function Home() {
       setTimeout(() => ripple.remove(), 800);
     };
 
-    /* Magnetic effect */
+    /* Magnetic effect (Desktop only) */
     const magneticElements = document.querySelectorAll(
       ".magnetic, .project-card, .contact-btn, .nav-links a, .skill-card"
     );
@@ -152,7 +187,7 @@ export default function Home() {
       window.removeEventListener("mousemove", move);
       window.removeEventListener("click", click);
     };
-  }, []);
+  }, [isMobile]);
 
   /* ===== GSAP Scroll Animations ===== */
   useEffect(() => {
@@ -247,6 +282,20 @@ export default function Home() {
       <div className="cursor-tail" />
       <div className="cursor-follower" />
 
+      {/* Mobile Menu Overlay */}
+      <AnimatePresence>
+        {isMobileMenuOpen && (
+          <motion.div
+            className="mobile-menu-overlay"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            onClick={() => setIsMobileMenuOpen(false)}
+          />
+        )}
+      </AnimatePresence>
+
       {/* NAV */}
       <motion.header
         className="navbar"
@@ -257,7 +306,7 @@ export default function Home() {
         <div className="nav-container">
           <motion.div
             className="nav-left"
-            whileHover={{ scale: 1.05 }}
+            whileHover={{ scale: isMobile ? 1 : 1.05 }}
             whileTap={{ scale: 0.95 }}
           >
             <motion.div
@@ -273,7 +322,7 @@ export default function Home() {
             </motion.div>
             <span className="nav-logo-text">Ranith Kumar</span>
           </motion.div>
-          <nav className="nav-links">
+          <nav className={`nav-links ${isMobileMenuOpen ? "nav-links-open" : ""}`}>
             {["home", "about", "skills", "projects", "contact"].map((i, idx) => (
               <motion.a
                 key={i}
@@ -282,12 +331,32 @@ export default function Home() {
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: idx * 0.1 + 0.3 }}
-                whileHover={{ y: -2 }}
+                whileHover={{ y: isMobile ? 0 : -2 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={(e) => {
+                  setIsMobileMenuOpen(false);
+                  // Smooth scroll to section
+                  const element = document.getElementById(i);
+                  if (element) {
+                    e.preventDefault();
+                    element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                  }
+                }}
               >
                 {i}
               </motion.a>
             ))}
           </nav>
+          <button
+            className={`mobile-menu-toggle ${isMobileMenuOpen ? "menu-open" : ""}`}
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+            aria-label="Toggle menu"
+            aria-expanded={isMobileMenuOpen}
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
         </div>
       </motion.header>
 
