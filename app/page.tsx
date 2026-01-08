@@ -50,7 +50,7 @@ export default function Home() {
       particle.style.top = `${Math.random() * 100}%`;
       particle.style.animationDuration = `${Math.random() * 25 + 20}s`;
       particle.style.animationDelay = `${Math.random() * 5}s`;
-      const colors = ["rgba(168, 85, 247, 0.6)", "rgba(34, 211, 238, 0.6)", "rgba(139, 92, 246, 0.6)"];
+      const colors = ["rgba(0, 212, 170, 0.6)", "rgba(0, 184, 212, 0.6)", "rgba(255, 107, 107, 0.6)"];
       particle.style.background = colors[Math.floor(Math.random() * colors.length)];
       document.querySelector(".space-bg")?.appendChild(particle);
 
@@ -194,31 +194,46 @@ export default function Home() {
   const projects = [
     {
       img: "/ai-blog.png",
-      title: "AI-Powered Blog Platform",
-      desc: "A modern full-stack blog platform with AI content generation, secure authentication, and server-side rendering for optimal performance.",
-      tech: ["Next.js", "TypeScript", "Prisma", "PostgreSQL", "OpenAI"],
+      title: "RazCapitals – Trading Platform",
+      desc: "Developed a comprehensive trading platform with website, admin panel, and user dashboard using React and TypeScript, integrated with Supabase for authentication and data management.",
+      tech: ["React", "TypeScript", "Supabase", "PostgreSQL"],
       link: "#",
     },
     {
       img: "/ai-chat.jpg",
-      title: "Real-time Chat Application",
-      desc: "A scalable real-time messaging application built with Socket.io, featuring MongoDB integration and modern UI/UX design.",
-      tech: ["React", "Socket.io", "MongoDB", "Node.js", "Express"],
+      title: "DoorSync – Community Management Platform",
+      desc: "Contributed to backend microservices development using Java and Spring Boot, following DDD, CQRS, and hexagonal architecture principles. Built serverless APIs with AWS Lambda and API Gateway.",
+      tech: ["Java", "Spring Boot", "AWS Lambda", "API Gateway", "DynamoDB", "Cognito"],
+      link: "#",
+    },
+    {
+      img: "/ai-blog.png",
+      title: "Traffic Sign Recognition System",
+      desc: "Designed and trained a CNN model using TensorFlow to classify traffic signs, achieving over 95% accuracy through data augmentation and model tuning.",
+      tech: ["Python", "TensorFlow", "Keras", "CNN", "Machine Learning"],
+      link: "#",
+    },
+    {
+      img: "/ai-chat.jpg",
+      title: "IoT Smart Walk Stick",
+      desc: "Engineered a smart walking stick with Arduino-based sensors for gait analysis and fall detection, featuring real-time alerts to enhance mobility and safety.",
+      tech: ["Arduino", "IoT", "Sensors", "Embedded Systems"],
       link: "#",
     },
   ];
 
   const skills = [
     { name: "Frontend Development", level: 90, icon: "🎨" },
-    { name: "Backend Development", level: 85, icon: "⚙️" },
-    { name: "Machine Learning", level: 80, icon: "🤖" },
-    { name: "UI/UX Design", level: 75, icon: "✨" },
-    { name: "DevOps", level: 70, icon: "🚀" },
+    { name: "Backend Development", level: 88, icon: "⚙️" },
+    { name: "Cloud & AWS", level: 85, icon: "☁️" },
+    { name: "Machine Learning", level: 82, icon: "🤖" },
+    { name: "Full-Stack Development", level: 90, icon: "💻" },
   ];
 
   const techStack = [
-    "React", "Next.js", "TypeScript", "Node.js", "Python", "TensorFlow",
-    "MongoDB", "PostgreSQL", "Docker", "AWS", "Git", "Figma"
+    "Java", "JavaScript", "TypeScript", "Python", "React", "Next.js",
+    "Spring Boot", "AWS Lambda", "API Gateway", "Supabase", "MySQL",
+    "DynamoDB", "Docker", "TensorFlow", "Keras", "Git", "PostgreSQL"
   ];
 
   return (
@@ -254,9 +269,9 @@ export default function Home() {
                 rotate: { duration: 20, repeat: Infinity, ease: "linear" },
               }}
             >
-              <span>HR</span>
+              <span>RK</span>
             </motion.div>
-            <span className="nav-logo-text">H G Rakshitha</span>
+            <span className="nav-logo-text">Ranith Kumar</span>
           </motion.div>
           <nav className="nav-links">
             {["home", "about", "skills", "projects", "contact"].map((i, idx) => (
@@ -318,9 +333,9 @@ export default function Home() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.5, duration: 0.8 }}
             >
-              Full Stack Developer & Machine Learning Engineer passionate about
-              building innovative solutions that combine cutting-edge technology
-              with exceptional user experiences.
+              Software Developer passionate about building scalable web applications,
+              backend microservices, and AI-powered solutions. Currently working at
+              Unico International, crafting innovative digital experiences.
             </motion.p>
 
             <motion.div
@@ -361,8 +376,8 @@ export default function Home() {
               transition={{ delay: 0.9, duration: 0.8 }}
             >
               {[
-                { number: "50+", label: "Projects" },
-                { number: "3+", label: "Years Experience" },
+                { number: "10+", label: "Projects" },
+                { number: "2+", label: "Years Experience" },
                 { number: "100%", label: "Client Satisfaction" },
               ].map((stat, idx) => (
                 <motion.div
@@ -398,13 +413,18 @@ export default function Home() {
             }}
           >
             <div className="hero-image-frame">
-              <motion.img
-                src="/raksh.jpg"
-                alt="H G Rakshitha"
-                className="hero-image"
+              <motion.div
                 whileHover={{ scale: 1.05 }}
                 transition={{ duration: 0.3 }}
-              />
+                style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}
+              >
+                <img
+                  src="/ranith-1.jpeg"
+                  alt="Ranith Kumar"
+                  className="hero-image"
+                  style={{ width: "100%", height: "100%", objectFit: "cover", borderRadius: "24px" }}
+                />
+              </motion.div>
               <div className="hero-image-glow" />
               <div className="hero-image-border" />
             </div>
@@ -466,13 +486,27 @@ export default function Home() {
               transition={{ duration: 0.8, type: "spring" }}
             >
               <div className="about-image-frame">
-                <motion.img
-                  src="/rakshi.jpeg"
-                  alt="About"
-                  className="about-image"
+                <motion.div
                   whileHover={{ scale: 1.05 }}
                   transition={{ duration: 0.3 }}
-                />
+                  style={{ width: "100%", height: "100%", position: "relative", overflow: "hidden" }}
+                >
+                  <img
+                    src="/ranith-2.jpeg"
+                    alt="Ranith Kumar - About"
+                    className="about-image"
+                    style={{ 
+                      width: "100%", 
+                      height: "100%", 
+                      objectFit: "cover", 
+                      borderRadius: "24px",
+                      display: "block"
+                    }}
+                    onError={(e) => {
+                      console.error("Image failed to load:", e);
+                    }}
+                  />
+                </motion.div>
                 <div className="about-image-glow" />
               </div>
             </motion.div>
@@ -485,26 +519,25 @@ export default function Home() {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <p className="about-description">
-                I'm a Computer Science Engineer (2025) with a passion for creating
-                exceptional digital experiences. My expertise spans full-stack
-                development and machine learning, allowing me to build
-                end-to-end solutions that are both technically robust and
-                user-centric.
+                I'm a Software Developer with a B.Tech in Computer Science and Engineering
+                from MGIT, Hyderabad (2024). Currently working at Unico International Pvt Ltd,
+                Bangalore, where I develop scalable web applications and backend microservices
+                using modern technologies like React, Next.js, TypeScript, Java, and Spring Boot.
               </p>
               <p className="about-description">
-                I specialize in building production-grade applications using
-                modern technologies, with a keen eye for design and a commitment
-                to writing clean, maintainable code. Whether it's a complex ML
-                model or a beautiful web interface, I approach every project with
-                attention to detail and a drive for excellence.
+                My expertise spans full-stack development, cloud architecture with AWS,
+                and machine learning. I've contributed to projects ranging from corporate
+                websites to complex trading platforms, following best practices like DDD,
+                CQRS, and hexagonal architecture. I'm passionate about building production-grade
+                applications that deliver exceptional user experiences.
               </p>
 
               <div className="about-highlights">
                 {[
                   "Full-Stack Development",
+                  "Backend Microservices",
+                  "Cloud & AWS",
                   "Machine Learning",
-                  "UI/UX Design",
-                  "Cloud Architecture",
                 ].map((highlight, idx) => (
                   <motion.div
                     key={highlight}
@@ -659,8 +692,8 @@ export default function Home() {
               Featured <span className="gradient-text">Projects</span>
             </h2>
             <p className="section-description">
-              A collection of projects showcasing my expertise in full-stack
-              development and machine learning
+              A collection of projects showcasing my expertise in full-stack development,
+              backend microservices, cloud architecture, and machine learning
             </p>
           </motion.div>
 
@@ -762,19 +795,19 @@ export default function Home() {
               >
                 {[
                   {
-                    href: "mailto:hgrakshitha70@gmail.com",
+                    href: "mailto:ranithkumar04@gmail.com",
                     text: "Email Me",
                     icon: "✉️",
                     className: "contact-btn email-btn",
                   },
                   {
-                    href: "https://linkedin.com/in/hgrakshitha146",
-                    text: "LinkedIn",
-                    icon: "💼",
+                    href: "tel:+919515630782",
+                    text: "Call Me",
+                    icon: "📞",
                     className: "contact-btn linkedin-btn",
                   },
                   {
-                    href: "https://github.com/HgRakshitha",
+                    href: "https://github.com",
                     text: "GitHub",
                     icon: "💻",
                     className: "contact-btn github-btn",
@@ -816,10 +849,11 @@ export default function Home() {
         transition={{ duration: 0.8 }}
       >
         <div className="container">
-          <p>© {new Date().getFullYear()} H G Rakshitha. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Ranith Kumar. All rights reserved.</p>
           <p className="footer-tagline">Built with passion and attention to detail</p>
         </div>
       </motion.footer>
     </main>
   );
 }
+

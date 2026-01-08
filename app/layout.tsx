@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Your Portfolio",
-  description: "Creative developer portfolio showcasing projects and skills",
+  title: "Ranith Kumar - Software Developer",
+  description: "Software Developer portfolio showcasing full-stack development, backend microservices, cloud architecture, and machine learning projects",
 };
 
 export default function RootLayout({
